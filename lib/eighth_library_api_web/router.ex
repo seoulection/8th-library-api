@@ -2,7 +2,6 @@ defmodule EighthLibraryApiWeb.Router do
   use EighthLibraryApiWeb, :router
 
   pipeline :api do
-    plug CORSPlug, origin: "http://localhost:3000"
     plug :accepts, ["json"]
     plug :fetch_session
   end
@@ -15,6 +14,7 @@ defmodule EighthLibraryApiWeb.Router do
     pipe_through :api
 
     post "/users/login", UserController, :login
+    get "/users/current", UserController, :current_user
   end
 
   # Protected Routes
@@ -24,9 +24,9 @@ defmodule EighthLibraryApiWeb.Router do
 
   # Plug function
   defp ensure_authenticated(conn, _opts) do
-    current_user_email = get_session(conn, :current_user_email)
+    current_user_id = get_session(conn, :current_user_id)
 
-    if current_user_email do
+    if current_user_id do
       conn
     else
       conn
