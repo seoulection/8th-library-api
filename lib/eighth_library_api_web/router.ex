@@ -20,6 +20,8 @@ defmodule EighthLibraryApiWeb.Router do
   # Protected Routes
   scope "/api", EighthLibraryApiWeb do
     pipe_through [:api, :api_auth]
+
+    post "/books/new", BookController, :create
   end
 
   # Plug function
