@@ -18,4 +18,10 @@ defmodule EighthLibraryApiWeb.UserView do
       users: render_many(users, EighthLibraryApiWeb.UserView, "login.json")
     }
   end
+
+  def render("current_user.json", %{current_user: current_user}) do
+    %{
+      current_user: current_user
+    }
+  end
 end
