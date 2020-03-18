@@ -11,7 +11,6 @@ defmodule EighthLibraryApiWeb.UserController do
   end
 
   def login(conn, params) do
-    id = conn.assigns[:current_user_id]
     case Accounts.find_user(params["email"]) do
       {:ok, user} ->
         conn
@@ -23,9 +22,17 @@ defmodule EighthLibraryApiWeb.UserController do
 
   def current_user(conn, _params) do
     current_user = get_session(conn, :current_user_id)
-    conn
-    |> put_view(EighthLibraryApiWeb.UserView)
-    |> render("current_user.json", current_user: current_user)
+    case current_user do
+      nil ->
+        conn
+        |> put_status(:unauthorized)
+        |> put_view(EighthLibraryApiWeb.ErrorView)
+        |> render("401.json", message: "Current user not found")
+      _ ->
+        conn
+        |> put_view(EighthLibraryApiWeb.UserView)
+        |> render("current_user.json", current_user: current_user)
+    end
   end
 
   defp create_user(conn, params) do
