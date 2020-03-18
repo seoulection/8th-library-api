@@ -14,10 +14,6 @@ defmodule EighthLibraryApiWeb.ErrorView do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end
 
-  def render("401.json", _params) do
-    %{errors: %{detail: "Error logging in"}}
-  end
-
   def render("401.json", %{message: message}) do
     %{errors: %{detail: message}}
   end
