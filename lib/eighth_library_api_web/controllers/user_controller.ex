@@ -25,6 +25,7 @@ defmodule EighthLibraryApiWeb.UserController do
     case current_user do
       nil ->
         conn
+        |> delete_session(:current_user_id)
         |> put_status(:unauthorized)
         |> put_view(EighthLibraryApiWeb.ErrorView)
         |> render("401.json", message: "Current user not found")

@@ -7,6 +7,7 @@ defmodule EighthLibraryApi.Accounts.User do
     field :first_name, :string
     field :image_url, :string
     field :last_name, :string
+    has_many :books, EighthLibraryApi.Library.Book
 
     timestamps()
   end
