@@ -21,6 +21,7 @@ defmodule EighthLibraryApiWeb.Router do
   scope "/api", EighthLibraryApiWeb do
     pipe_through [:api, :api_auth]
 
+    get "/books", BookController, :index
     post "/books/new", BookController, :create
   end
 

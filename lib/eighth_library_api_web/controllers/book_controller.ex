@@ -2,12 +2,13 @@ defmodule EighthLibraryApiWeb.BookController do
   use EighthLibraryApiWeb, :controller
   alias EighthLibraryApi.Library
   alias EighthLibraryApi.Accounts
+  alias EighthLibraryApiWeb.BookView
 
   def index(conn, _params) do
     books = Library.list_books
     conn
     |> put_status(:ok)
-    |> put_view(EighthLibraryApiWeb.BookView)
+    |> put_view(BookView)
     |> render("books.json", books: books)
   end
 
