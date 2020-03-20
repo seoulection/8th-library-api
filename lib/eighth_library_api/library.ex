@@ -18,6 +18,7 @@ defmodule EighthLibraryApi.Library do
 
   """
   def list_books do
+    Book
     Repo.all(Book)
   end
 

@@ -1,6 +1,9 @@
 defmodule EighthLibraryApi.Library.Book do
+  @derive {Jason.Encoder, only: [:author, :description, :image, :is_available, :rating, :title, :user, :borrowed_user]}
   use Ecto.Schema
   import Ecto.Changeset
+
+  alias EighthLibraryApi.Accounts
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -11,7 +14,8 @@ defmodule EighthLibraryApi.Library.Book do
     field :is_available, :boolean, default: true
     field :rating, :float, default: 0.0
     field :title, :string, null: false
-    belongs_to :user, EighthLibraryApi.Accounts.User, type: :id
+    belongs_to :user, Accounts.User, type: :id
+    belongs_to :borrowed_user, Accounts.User, type: :id
 
     timestamps()
   end
