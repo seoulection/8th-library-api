@@ -1,13 +1,26 @@
 defmodule EighthLibraryApiWeb.UserController do
   use EighthLibraryApiWeb, :controller
   alias EighthLibraryApi.Accounts
+  alias EighthLibraryApi.Repo
+  alias EighthLibraryApiWeb.UserView
+  alias EighthLibraryApiWeb.ErrorView
 
   def index(conn, _params) do
     users = Accounts.list_users
     conn
     |> put_status(:ok)
-    |> put_view(EighthLibraryApiWeb.UserView)
+    |> put_view(UserView)
     |> render("users.json", users: users)
+  end
+
+  def show(conn, %{"id" => id}) do
+    user = Accounts.get_user!(id)
+           |> Repo.preload([:books, :borrowed_books])
+
+    conn
+    |> put_status(:ok)
+    |> put_view(UserView)
+    |> render("user.json", user: user)
   end
 
   def login(conn, params) do
@@ -27,11 +40,11 @@ defmodule EighthLibraryApiWeb.UserController do
         conn
         |> delete_session(:current_user_id)
         |> put_status(:unauthorized)
-        |> put_view(EighthLibraryApiWeb.ErrorView)
+        |> put_view(ErrorView)
         |> render("401.json", message: "Current user not found")
       _ ->
         conn
-        |> put_view(EighthLibraryApiWeb.UserView)
+        |> put_view(UserView)
         |> render("current_user.json", current_user: current_user)
     end
   end
@@ -45,7 +58,7 @@ defmodule EighthLibraryApiWeb.UserController do
         conn
         |> delete_session(:current_user_id)
         |> put_status(:unauthorized)
-        |> put_view(EighthLibraryApiWeb.ErrorView)
+        |> put_view(ErrorView)
         |> render("401.json", message: "Error logging in")
     end
   end
@@ -54,7 +67,7 @@ defmodule EighthLibraryApiWeb.UserController do
     conn
     |> put_session(:current_user_id, user.id)
     |> put_status(:ok)
-    |> put_view(EighthLibraryApiWeb.UserView)
+    |> put_view(UserView)
     |> render("login.json", user: user)
   end
 end
