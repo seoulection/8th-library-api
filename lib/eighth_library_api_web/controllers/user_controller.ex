@@ -34,18 +34,18 @@ defmodule EighthLibraryApiWeb.UserController do
   end
 
   def current_user(conn, _params) do
-    current_user = get_session(conn, :current_user_id)
+    current_user = get_session(conn, :current_user)
     case current_user do
       nil ->
         conn
-        |> delete_session(:current_user_id)
+        |> delete_session(:current_user)
         |> put_status(:unauthorized)
         |> put_view(ErrorView)
         |> render("401.json", message: "Current user not found")
       _ ->
         conn
         |> put_view(UserView)
-        |> render("current_user.json", current_user: current_user)
+        |> render("current_user.json", user: current_user)
     end
   end
 
@@ -56,7 +56,7 @@ defmodule EighthLibraryApiWeb.UserController do
         |> authenticate_user(user)
       {:error, _} ->
         conn
-        |> delete_session(:current_user_id)
+        |> delete_session(:current_user)
         |> put_status(:unauthorized)
         |> put_view(ErrorView)
         |> render("401.json", message: "Error logging in")
@@ -65,9 +65,9 @@ defmodule EighthLibraryApiWeb.UserController do
 
   defp authenticate_user(conn, user) do
     conn
-    |> put_session(:current_user_id, user.id)
+    |> put_session(:current_user, user)
     |> put_status(:ok)
     |> put_view(UserView)
-    |> render("login.json", user: user)
+    |> render("current_user.json", user: user)
   end
 end

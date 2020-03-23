@@ -31,9 +31,9 @@ defmodule EighthLibraryApiWeb.Router do
 
   # Plug function
   defp ensure_authenticated(conn, _opts) do
-    current_user_id = get_session(conn, :current_user_id)
+    current_user = get_session(conn, :current_user)
 
-    if current_user_id do
+    if current_user do
       conn
     else
       conn
