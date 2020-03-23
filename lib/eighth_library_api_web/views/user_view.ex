@@ -3,7 +3,7 @@ defmodule EighthLibraryApiWeb.UserView do
 
   alias EighthLibraryApiWeb.BookView
 
-  def render("login.json", %{user: user}) do
+  def render("current_user.json", %{user: user}) do
     %{
       user: %{
         first_name: user.first_name,
@@ -18,12 +18,6 @@ defmodule EighthLibraryApiWeb.UserView do
   def render("users.json", %{users: users}) do
     %{
       users: render_many(users, EighthLibraryApiWeb.UserView, "login.json")
-    }
-  end
-
-  def render("current_user.json", %{current_user: current_user}) do
-    %{
-      current_user: current_user
     }
   end
 
