@@ -42,7 +42,7 @@ defmodule EighthLibraryApiWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug Corsica,
-    origins: "http://localhost:3000",
+    origins: ["http://localhost:3000", "https://eighth-library-web.herokuapp.com"],
     allow_credentials: true,
     allow_headers: ["Content-Type"],
     log: [rejected: :error, invalid: :warn, accepted: :debug]
