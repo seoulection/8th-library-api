@@ -33,6 +33,12 @@ defmodule EighthLibraryApiWeb.UserController do
     end
   end
 
+  def logout(conn, _params) do
+    conn
+    |> delete_session(:current_user)
+    |> send_resp(200, "")
+  end
+
   def current_user(conn, _params) do
     current_user = get_session(conn, :current_user)
     case current_user do

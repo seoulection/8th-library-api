@@ -27,6 +27,7 @@ defmodule EighthLibraryApiWeb.Router do
     post "/books/new", BookController, :create
 
     get "/users/:id", UserController, :show
+    delete "/users/logout", UserController, :logout
   end
 
   # Plug function
