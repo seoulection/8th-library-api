@@ -33,6 +33,7 @@ defmodule EighthLibraryApiWeb.BookController do
     }
 
     user = Accounts.get_user!(user_id)
+
     book_changeset = Ecto.build_assoc(user, :books, book_params)
 
     case Library.create_user_book(book_changeset) do
@@ -40,7 +41,7 @@ defmodule EighthLibraryApiWeb.BookController do
         conn
         |> put_status(:created)
         |> put_view(BookView)
-        |> render("book.json", book: book)
+        |> render("book.json", book: Repo.preload(book, [:borrowed_user, :user]))
       {:error, _} ->
         conn
         |> send_resp(400, "")
@@ -51,7 +52,7 @@ defmodule EighthLibraryApiWeb.BookController do
     user = Accounts.get_user!(params["user_id"])
 
     book_changeset = Library.get_book!(params["book_id"])
-                     |> Repo.preload(:borrowed_user)
+                     |> Repo.preload([:borrowed_user, :user])
                      |> Ecto.Changeset.change(%{borrowed_user: user, is_available: false})
 
     case Repo.update(book_changeset) do
