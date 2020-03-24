@@ -48,12 +48,29 @@ defmodule EighthLibraryApiWeb.BookController do
     end
   end
 
-  def update(conn, params) do
+  def borrow(conn, params) do
     user = Accounts.get_user!(params["user_id"])
 
     book_changeset = Library.get_book!(params["book_id"])
                      |> Repo.preload([:borrowed_user, :user])
                      |> Ecto.Changeset.change(%{borrowed_user: user, is_available: false})
+
+    case Repo.update(book_changeset) do
+      {:ok, book} ->
+        conn
+        |> put_status(:ok)
+        |> put_view(BookView)
+        |> render("book.json", book: book)
+      {:error, _} ->
+        conn
+        |> send_resp(400, "")
+    end
+  end
+
+  def return(conn, %{"book_id" => book_id}) do
+    book_changeset = Library.get_book!(book_id)
+                     |> Repo.preload([:borrowed_user, :user])
+                     |> Ecto.Changeset.change(%{borrowed_user: nil, is_available: true})
 
     case Repo.update(book_changeset) do
       {:ok, book} ->

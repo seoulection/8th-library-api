@@ -23,7 +23,8 @@ defmodule EighthLibraryApiWeb.Router do
 
     get "/books", BookController, :index
     get "/books/:id", BookController, :show
-    patch "/books/:id", BookController, :update
+    patch "/books/:id/borrow", BookController, :borrow
+    patch "/books/:id/return", BookController, :return
     post "/books/new", BookController, :create
 
     get "/users/:id", UserController, :show
