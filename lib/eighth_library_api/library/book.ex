@@ -15,7 +15,7 @@ defmodule EighthLibraryApi.Library.Book do
     field :rating, :float, default: 0.0
     field :title, :string, null: false
     belongs_to :user, Accounts.User, type: :id
-    belongs_to :borrowed_user, Accounts.User, type: :id
+    belongs_to :borrowed_user, Accounts.User, type: :id, on_replace: :nilify
 
     timestamps()
   end

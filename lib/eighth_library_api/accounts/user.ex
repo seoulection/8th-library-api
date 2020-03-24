@@ -1,5 +1,5 @@
 defmodule EighthLibraryApi.Accounts.User do
-  @derive {Jason.Encoder, only: [:email, :first_name, :image_url, :last_name]}
+  @derive {Jason.Encoder, only: [:id, :email, :first_name, :image_url, :last_name]}
   use Ecto.Schema
   import Ecto.Changeset
 
