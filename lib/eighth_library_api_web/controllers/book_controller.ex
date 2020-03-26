@@ -67,7 +67,7 @@ defmodule EighthLibraryApiWeb.BookController do
     end
   end
 
-  def return(conn, %{"book_id" => book_id}) do
+  def return(conn, %{"id" => book_id}) do
     book_changeset = Library.get_book!(book_id)
                      |> Repo.preload([:borrowed_user, :user])
                      |> Ecto.Changeset.change(%{borrowed_user: nil, is_available: true})

@@ -2,6 +2,8 @@ defmodule EighthLibraryApi.LibraryTest do
   use EighthLibraryApi.DataCase
 
   alias EighthLibraryApi.Library
+  alias EighthLibraryApi.Accounts
+  alias EighthLibraryApi.Repo
 
   describe "books" do
     alias EighthLibraryApi.Library.Book
@@ -17,6 +19,17 @@ defmodule EighthLibraryApi.LibraryTest do
         |> Library.create_book()
 
       book
+    end
+
+    @valid_user_attrs %{email: "some email", first_name: "some first_name", image_url: "some image_url", last_name: "some last_name"}
+
+    def user_fixture(attrs \\ %{}) do
+      {:ok, user} =
+        attrs
+        |> Enum.into(@valid_user_attrs)
+        |> Accounts.create_user()
+
+      user
     end
 
     test "list_books/0 returns all books" do
@@ -41,6 +54,32 @@ defmodule EighthLibraryApi.LibraryTest do
 
     test "create_book/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Library.create_book(@invalid_attrs)
+    end
+
+    test "create_user_book/1 creates book based off changeset" do
+      book_params = %{
+        title: "some title",
+        author: "some author",
+        description: "some description",
+        image: "some image"
+      }
+      user = user_fixture()
+      book_changeset = Ecto.build_assoc(user, :books, book_params)
+
+      {:ok, book} = Library.create_user_book(book_changeset)
+      preloaded_book = Repo.preload(book, [:borrowed_user, :user])
+
+      assert preloaded_book.title == "some title"
+      assert preloaded_book.author == "some author"
+      assert preloaded_book.description == "some description"
+      assert preloaded_book.image == "some image"
+      assert preloaded_book.user == user
+    end
+
+    test "create_user_book/1 returns error for invalid changeset" do
+      book_changeset = %Book{}
+                       |> Book.changeset(@invalid_attrs)
+      assert elem(Library.create_user_book(book_changeset), 0) == :error
     end
 
     test "update_book/2 with valid data updates the book" do
