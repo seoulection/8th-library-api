@@ -29,6 +29,15 @@ defmodule EighthLibraryApi.AccountsTest do
       assert Accounts.get_user!(user.id) == user
     end
 
+    test "find_user/1 returns the user with given email" do
+      user = user_fixture()
+      assert Accounts.find_user(user.email) == {:ok, user}
+    end
+
+    test "find_user/1 returns an error if the user is not found" do
+      assert Accounts.find_user("some bad email") == {:error, "Not found"}
+    end
+
     test "create_user/1 with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@valid_attrs)
       assert user.email == "some email"

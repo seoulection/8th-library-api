@@ -5,14 +5,6 @@ defmodule EighthLibraryApiWeb.UserController do
   alias EighthLibraryApiWeb.UserView
   alias EighthLibraryApiWeb.ErrorView
 
-  def index(conn, _params) do
-    users = Accounts.list_users
-    conn
-    |> put_status(:ok)
-    |> put_view(UserView)
-    |> render("users.json", users: users)
-  end
-
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
            |> Repo.preload([books: [:borrowed_user, :user], borrowed_books: [:borrowed_user, :user]])
