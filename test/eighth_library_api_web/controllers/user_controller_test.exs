@@ -79,7 +79,7 @@ defmodule EighthLibraryApiWeb.UserControllerTest do
 
     assert response["user"]["first_name"] == "some first name"
     assert response["user"]["last_name"] == "some last name"
-    assert response["user"]["books"] == []
+    assert response["user"]["owned_books"] == []
     assert response["user"]["borrowed_books"] == []
   end
 

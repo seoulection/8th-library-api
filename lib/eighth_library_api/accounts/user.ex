@@ -8,8 +8,8 @@ defmodule EighthLibraryApi.Accounts.User do
     field :first_name, :string
     field :image_url, :string
     field :last_name, :string
-    has_many :books, EighthLibraryApi.Library.Book
-    has_many :borrowed_books, EighthLibraryApi.Library.Book
+    has_many :owned_books, EighthLibraryApi.Library.Book, foreign_key: :owner_id
+    has_many :borrowed_books, EighthLibraryApi.Library.Book, foreign_key: :borrower_id
 
     timestamps()
   end

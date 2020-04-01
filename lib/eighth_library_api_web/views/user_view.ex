@@ -29,7 +29,7 @@ defmodule EighthLibraryApiWeb.UserView do
         email: user.email,
         image_url: user.image_url,
         id: user.id,
-        books: Enum.map(user.books, fn book -> BookView.render("book.json", book: book) end),
+        owned_books: Enum.map(user.owned_books, fn book -> BookView.render("book.json", book: book) end),
         borrowed_books: Enum.map(user.borrowed_books, fn book -> BookView.render("book.json", book: book) end)
       }
     }

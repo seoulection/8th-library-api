@@ -1,5 +1,5 @@
 defmodule EighthLibraryApi.Library.Book do
-  @derive {Jason.Encoder, only: [:author, :description, :image, :is_available, :rating, :title, :user, :borrowed_user]}
+  @derive {Jason.Encoder, only: [:author, :description, :image, :is_available, :rating, :title, :owner, :borrower]}
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -14,8 +14,8 @@ defmodule EighthLibraryApi.Library.Book do
     field :is_available, :boolean, default: true
     field :rating, :float, default: 0.0
     field :title, :string, null: false
-    belongs_to :user, Accounts.User, type: :id
-    belongs_to :borrowed_user, Accounts.User, type: :id, on_replace: :nilify
+    belongs_to :owner, Accounts.User, type: :id
+    belongs_to :borrower, Accounts.User, type: :id, on_replace: :nilify
 
     timestamps()
   end

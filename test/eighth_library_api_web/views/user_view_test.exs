@@ -12,7 +12,7 @@ defmodule EighthLibraryApiWeb.UserViewTest do
       email: "some email",
       image_url: "some image url",
       id: 0,
-      books: [],
+      owned_books: [],
       borrowed_books: []
     }
     assert render(UserView, "user.json", %{user: user}) == %{user: user}
@@ -37,7 +37,7 @@ defmodule EighthLibraryApiWeb.UserViewTest do
         email: "some email",
         image_url: "some image url",
         id: 0,
-        books: [],
+        owned_books: [],
         borrowed_books: []
       },
       %{
@@ -46,7 +46,7 @@ defmodule EighthLibraryApiWeb.UserViewTest do
         email: "some email",
         image_url: "some image url",
         id: 1,
-        books: [],
+        owned_books: [],
         borrowed_books: []
       }
     ]
@@ -59,7 +59,7 @@ defmodule EighthLibraryApiWeb.UserViewTest do
             email: "some email",
             image_url: "some image url",
             id: 0,
-            books: [],
+            owned_books: [],
             borrowed_books: []
           }
         },
@@ -70,7 +70,7 @@ defmodule EighthLibraryApiWeb.UserViewTest do
             email: "some email",
             image_url: "some image url",
             id: 1,
-            books: [],
+            owned_books: [],
             borrowed_books: []
           }
         }
