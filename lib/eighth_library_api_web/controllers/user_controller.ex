@@ -7,7 +7,7 @@ defmodule EighthLibraryApiWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
-           |> Repo.preload([books: [:borrowed_user, :user], borrowed_books: [:borrowed_user, :user]])
+           |> Repo.preload([owned_books: [:borrower, :owner], borrowed_books: [:borrower, :owner]])
 
     conn
     |> put_status(:ok)

@@ -10,8 +10,8 @@ defmodule EighthLibraryApi.Repo.Migrations.CreateBooks do
       add :rating, :float
       add :image, :binary
       add :is_available, :boolean, default: false, null: false
-      add :user_id, references(:users)
-      add :borrowed_user_id, references(:users)
+      add :owner_id, references(:users)
+      add :borrower_id, references(:users)
 
       timestamps()
     end

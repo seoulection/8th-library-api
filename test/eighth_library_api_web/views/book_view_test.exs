@@ -13,8 +13,8 @@ defmodule EighthLibraryApiWeb.BookViewTest do
       image: "some image",
       is_available: true,
       id: 1,
-      borrowed_user: "some borrowed user",
-      user: "some user"
+      borrower: "some borrowed user",
+      owner: "some user"
     }
     assert render(BookView, "book.json", %{book: book}) == %{
       title: "some title",
@@ -23,8 +23,8 @@ defmodule EighthLibraryApiWeb.BookViewTest do
       image: "some image",
       isAvailable: true,
       id: 1,
-      borrowed_user: "some borrowed user",
-      user: "some user"
+      borrower: "some borrowed user",
+      owner: "some user"
     }
   end
 
@@ -37,8 +37,8 @@ defmodule EighthLibraryApiWeb.BookViewTest do
         image: "some image",
         is_available: true,
         id: 1,
-        borrowed_user: "some borrowed user",
-        user: "some user"
+        borrower: "some borrowed user",
+        owner: "some user"
       },
       %{
         title: "some title",
@@ -47,8 +47,8 @@ defmodule EighthLibraryApiWeb.BookViewTest do
         image: "some image",
         is_available: true,
         id: 2,
-        borrowed_user: "some borrowed user",
-        user: "some user"
+        borrower: "some borrowed user",
+        owner: "some user"
       }
     ]
     assert render(BookView, "books.json", %{books: books}) == %{
@@ -60,8 +60,8 @@ defmodule EighthLibraryApiWeb.BookViewTest do
           image: "some image",
           isAvailable: true,
           id: 1,
-          borrowed_user: "some borrowed user",
-          user: "some user"
+          borrower: "some borrowed user",
+          owner: "some user"
         },
         %{
           title: "some title",
@@ -70,8 +70,8 @@ defmodule EighthLibraryApiWeb.BookViewTest do
           image: "some image",
           isAvailable: true,
           id: 2,
-          borrowed_user: "some borrowed user",
-          user: "some user"
+          borrower: "some borrowed user",
+          owner: "some user"
         }
       ]
     }

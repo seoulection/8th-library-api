@@ -9,8 +9,8 @@ defmodule EighthLibraryApiWeb.BookView do
       image: book.image,
       isAvailable: book.is_available,
       id: book.id,
-      borrowed_user: book.borrowed_user,
-      user: book.user
+      borrower: book.borrower,
+      owner: book.owner
     }
   end
 

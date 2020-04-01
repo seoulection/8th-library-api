@@ -64,16 +64,16 @@ defmodule EighthLibraryApi.LibraryTest do
         image: "some image"
       }
       user = user_fixture()
-      book_changeset = Ecto.build_assoc(user, :books, book_params)
+      book_changeset = Ecto.build_assoc(user, :owned_books, book_params)
 
       {:ok, book} = Library.create_user_book(book_changeset)
-      preloaded_book = Repo.preload(book, [:borrowed_user, :user])
+      preloaded_book = Repo.preload(book, [:borrower, :owner])
 
       assert preloaded_book.title == "some title"
       assert preloaded_book.author == "some author"
       assert preloaded_book.description == "some description"
       assert preloaded_book.image == "some image"
-      assert preloaded_book.user == user
+      assert preloaded_book.owner == user
     end
 
     test "create_user_book/1 returns error for invalid changeset" do
